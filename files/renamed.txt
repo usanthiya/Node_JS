@@ -1,0 +1,3 @@
+Node.js provides several methods for creating and writing to files. Using fs.writeFile()
+
+ Apending some content at the end of the file
