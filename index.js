@@ -1,7 +1,10 @@
-const { format } = require('date-fns');
-const { v4: uuid} = require('uuid');
+const EventEmitter = require('events');
+const logEvents= require('./logEvents');
 
-console.log("Today's date and time: ", format(new Date(), 'dd-MM-yyyy hh:mm:ss'))
-console.log(uuid())
-console.log("Hello world!")
-console.log("testing")
+const myEmitter = new EventEmitter();
+
+myEmitter.on('log',(msg)=>{
+  logEvents(msg);
+})
+
+myEmitter.emit('log','log event emitted!')
