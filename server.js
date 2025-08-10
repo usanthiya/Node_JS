@@ -1,21 +1,38 @@
-const os= require('os');
-const path= require('path');
-const {add, sub, mult, div} = require('./math')
-// const math= require('./math')
+const http = require('http');
+const fs = require('fs');
+const hostname= 'localhost';
+const PORT = 3000;
 
-console.log(os.type())
-console.log(__dirname)
-console.log(__filename)
-console.log(path.dirname(__filename))
-console.log(path.basename(__filename))
-console.log(path.extname(__filename))
-console.log('--------------------------------------')
-console.log("Addition: ", add(10,2))
-console.log("Subraction: ", sub(10,2))
-console.log("Multiplication: ", mult(10,2))
-console.log("Division: ", div(10,2))
+// simple web server serving "Hello World" text 
+// const server = http.createServer((req, res)=>{
+//   res.writeHead(200, {'content-type': 'text/plain'});
+//   res.end('Hello World!')
+// })
 
-// console.log("Addition: ", math.add(10,2))
-// console.log("Subraction: ", math.sub(10,2))
-// console.log("Multiplication: ", math.mult(10,2))
-// console.log("Division: ", math.div(10,2))
+//simple web server serving JSON response
+// const server = http.createServer((req,res)=>{
+//   res.writeHead(200, {'content-type': 'application/json'});
+//   res.end(JSON.stringify({data: 'Hello world!'}))
+// })
+
+// const server = http.createServer((req, res)=>{
+//   res.writeHead(200, {'content-type': 'text/html'});
+//   res.end(`<h1>Hello World!</h1><p>This is simple web server response</p>`)
+// })
+
+const server= http.createServer((req, res)=>{
+  res.writeHead(200, {'content-type':'text/html'});
+  fs.readFile('index.html',(err, data)=>{
+    if(err){
+      res.writeHead(404);
+      res.write('Page not found!')
+    }else{
+      res.write(data);
+    }
+    res.end();
+  })
+})
+
+server.listen(PORT, hostname, ()=>{
+    console.log(`Server is running on http://${hostname}:${PORT}`);
+})
